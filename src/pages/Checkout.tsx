@@ -1,41 +1,42 @@
 import { useCart } from '../hooks/useCart'
+import { formatPrice } from '../utils/format'
 
 const Checkout = () => {
   const { cart, getTotal, clearCart } = useCart()
 
   const handleCheckout = () => {
-    // Placeholder for external checkout integration (e.g., Stripe Checkout)
-    alert('Redirecting to external payment processor...')
-    // In real implementation, redirect to Stripe or similar
-    // window.location.href = 'https://checkout.stripe.com/pay/...'
     clearCart()
+    window.location.href = 'https://stripe.com/pay'
   }
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <h1 className="text-3xl font-bold mb-8">Checkout</h1>
-      <div className="bg-gray-100 p-8 rounded-lg">
-        <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
-        {cart.map((item, index) => (
-          <div key={index} className="flex justify-between mb-2">
-            <span>{item.product.name} (x{item.quantity})</span>
-            <span>${item.product.price * item.quantity}</span>
-          </div>
-        ))}
-        <div className="border-t pt-4 mt-4">
-          <div className="flex justify-between font-bold">
-            <span>Total:</span>
-            <span>${getTotal()}</span>
-          </div>
+    <div className="container mx-auto px-6 py-16 text-brand-default">
+      <div className="mb-10">
+        <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-2">Checkout</p>
+        <h1 className="text-4xl font-semibold">Complete your order</h1>
+      </div>
+      <div className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
+        <h2 className="text-xl font-semibold mb-6">Order summary</h2>
+        <div className="space-y-4">
+          {cart.map((item, index) => (
+            <div key={index} className="flex justify-between text-brand-muted">
+              <span>{item.product.name} x{item.quantity}</span>
+              <span>{formatPrice(item.product.price * item.quantity)}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-6 border-t border-brand-border pt-6 text-lg font-semibold text-brand-default flex items-center justify-between">
+          <span>Total</span>
+          <span>{formatPrice(getTotal())}</span>
         </div>
         <button
           onClick={handleCheckout}
-          className="bg-black text-white px-8 py-3 rounded-lg mt-8 w-full"
+          className="mt-8 w-full rounded-full bg-brand-default px-6 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-brand-accent"
         >
-          Pay with External Processor
+          Continue to external checkout
         </button>
-        <p className="text-sm text-gray-600 mt-4">
-          This will redirect to an external payment service.
+        <p className="mt-4 text-sm text-brand-muted">
+          Your payment will be handled by an external processor such as Stripe or PayPal.
         </p>
       </div>
     </div>

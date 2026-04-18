@@ -1,6 +1,7 @@
 {
   "name": "rosna-storefront",
   "private": true,
+  "homepage": "https://amiskiewiczpl.github.io/daria-sklep",
   "version": "0.0.0",
   "type": "module",
   "scripts": {

@@ -1,23 +1,47 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../hooks/useCart'
+import MobileMenu from './MobileMenu'
 
 const Header = () => {
   const { cart } = useCart()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <header className="bg-white shadow-md">
-      <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold text-gray-800">
-          Rosna
+    <header className="bg-white border-b border-brand-border">
+      <div className="container mx-auto flex items-center justify-between px-6 py-4">
+        <Link to="/" className="text-2xl font-black tracking-[0.2em] text-brand-default">
+          ROSNA
         </Link>
-        <nav className="space-x-4">
-          <Link to="/" className="text-gray-600 hover:text-gray-800">Home</Link>
-          <Link to="/products" className="text-gray-600 hover:text-gray-800">Products</Link>
-          <Link to="/cart" className="text-gray-600 hover:text-gray-800">
+        <nav className="hidden items-center gap-8 md:flex">
+          <Link to="/products" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Shop
+          </Link>
+          <Link to="/about" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            About
+          </Link>
+          <Link to="/faq" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            FAQ
+          </Link>
+          <Link to="/contact" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Contact
+          </Link>
+          <Link to="/policies" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Policies
+          </Link>
+          <Link to="/cart" className="text-sm font-semibold text-brand-accent">
             Cart ({cart.length})
           </Link>
         </nav>
+        <button
+          type="button"
+          className="inline-flex items-center justify-center rounded-full border border-brand-border px-4 py-2 text-sm font-medium text-brand-default md:hidden"
+          onClick={() => setMenuOpen(true)}
+        >
+          Menu
+        </button>
       </div>
+      <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} cartItemCount={cart.length} />
     </header>
   )
 }

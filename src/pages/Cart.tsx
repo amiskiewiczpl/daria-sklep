@@ -1,36 +1,42 @@
 import { Link } from 'react-router-dom'
 import { useCart } from '../hooks/useCart'
+import { formatPrice } from '../utils/format'
 
 const Cart = () => {
   const { cart, removeFromCart, getTotal } = useCart()
 
   return (
-    <div className="container mx-auto px-4 py-16">
-      <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+    <div className="container mx-auto px-6 py-16 text-brand-default">
+      <div className="mb-10">
+        <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-2">Cart</p>
+        <h1 className="text-4xl font-semibold">Your shopping bag</h1>
+      </div>
       {cart.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <div className="rounded-[1.5rem] border border-brand-border bg-white p-10 shadow-premium">
+          <p className="text-lg text-brand-muted">Your cart is empty. Add a product to continue.</p>
+        </div>
       ) : (
-        <>
-          <div className="space-y-4">
+        <div className="grid gap-10 xl:grid-cols-[1.3fr_0.7fr]">
+          <div className="space-y-6">
             {cart.map((item, index) => (
-              <div key={index} className="flex items-center justify-between border-b pb-4">
-                <div className="flex items-center space-x-4">
+              <div key={index} className="flex flex-col gap-4 rounded-[1.5rem] border border-brand-border bg-white p-6 shadow-premium md:flex-row md:items-center md:justify-between">
+                <div className="flex items-center gap-4">
                   <img
                     src={item.product.images[0]}
                     alt={item.product.name}
-                    className="w-16 h-16 object-cover rounded"
+                    className="h-24 w-24 rounded-3xl object-cover"
                   />
                   <div>
-                    <h3 className="font-semibold">{item.product.name}</h3>
-                    <p>Size: {item.selectedSize}, Color: {item.selectedColor}</p>
-                    <p>Quantity: {item.quantity}</p>
+                    <h3 className="text-lg font-semibold">{item.product.name}</h3>
+                    <p className="text-brand-muted">Size: {item.selectedSize} • Color: {item.selectedColor}</p>
+                    <p className="text-brand-muted">Quantity: {item.quantity}</p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold">${item.product.price * item.quantity}</p>
+                  <p className="text-lg font-semibold">{formatPrice(item.product.price * item.quantity)}</p>
                   <button
                     onClick={() => removeFromCart(index)}
-                    className="text-red-600 hover:text-red-800"
+                    className="mt-3 text-sm font-medium text-brand-accent hover:underline"
                   >
                     Remove
                   </button>
@@ -38,16 +44,17 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <div className="mt-8 text-right">
-            <p className="text-xl font-bold">Total: ${getTotal()}</p>
+          <aside className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
+            <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-4">Order summary</p>
+            <p className="text-3xl font-semibold mb-6">{formatPrice(getTotal())}</p>
             <Link
               to="/checkout"
-              className="bg-black text-white px-8 py-3 rounded-lg inline-block mt-4"
+              className="inline-flex w-full items-center justify-center rounded-full bg-brand-default px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-accent"
             >
-              Proceed to Checkout
+              Proceed to checkout
             </Link>
-          </div>
-        </>
+          </aside>
+        </div>
       )}
     </div>
   )
