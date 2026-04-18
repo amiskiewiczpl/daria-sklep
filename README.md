@@ -1,78 +1,69 @@
-# Rosna - Premium Fashion Storefront
+# Rosna Commerce
 
-A static React storefront for the Rosna fashion brand, built with Vite, TypeScript, and Tailwind CSS. Deployed on GitHub Pages.
+Monorepo dla marki modowej Rosna: publiczny storefront, panel sprzedawcy oraz wspólne modele danych.
 
-## Tech Stack
+## Struktura
 
-- **Frontend**: React 18, TypeScript, Tailwind CSS
-- **Routing**: React Router with HashRouter (for GitHub Pages compatibility)
-- **Build Tool**: Vite
-- **Deployment**: GitHub Pages with gh-pages
-- **Linting**: ESLint
-- **Formatting**: Prettier
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── common/          # Reusable components (ProductCard, etc.)
-│   └── sections/        # Page sections (Header, Footer)
-├── pages/               # Route components (Home, Products, etc.)
-├── hooks/               # Custom hooks (useCart)
-├── utils/               # Utility functions
-├── types/               # TypeScript interfaces
-└── data/                # Static data (products)
+```txt
+apps/
+  storefront/      publiczna aplikacja klienta React + Vite
+  admin/           panel sprzedawcy React + Vite + Supabase Auth
+packages/
+  shared/          wspólne typy produktów, zdjęć, koszyka i sekcji homepage
+supabase/
+  migrations/      schemat Postgres, RLS, Storage i seed homepage
+docs/
+  implementation-plan.md
 ```
 
-## Features
+## Stack
 
-- Product catalog with categories
-- Shopping cart with localStorage persistence
-- Responsive design
-- HashRouter for GitHub Pages routing
-- External checkout integration placeholder
+- React + Vite + TypeScript
+- Tailwind CSS
+- Supabase Auth
+- Supabase Postgres
+- Supabase Storage
 
-## Development
+## Komendy
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+npm run dev:storefront
+npm run dev:admin
+npm run lint
+npm run build
+```
 
-2. Start development server:
-   ```bash
-   npm run dev
-   ```
+Storefront działa domyślnie na `5173`, admin na `5174`.
 
-3. Build for production:
-   ```bash
-   npm run build
-   ```
+## Supabase
 
-4. Deploy to GitHub Pages:
-   ```bash
-   npm run deploy
-   ```
+1. Utwórz projekt Supabase.
+2. Uruchom migrację z `supabase/migrations/20260418123000_rosna_mvp.sql`.
+3. Utwórz użytkownika w Supabase Auth.
+4. Dodaj go do `admin_profiles`.
+5. Ustaw zmienne środowiskowe:
 
-## Deployment
+```bash
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
 
-The project is configured for GitHub Pages deployment:
+Szczegółowy plan wdrożenia jest w `docs/implementation-plan.md`.
 
-- Base path: `/daria-sklep/`
-- Uses HashRouter for client-side routing
-- gh-pages package handles deployment to `gh-pages` branch
+## Zasady publikacji
 
-After deployment, the site will be available at: `https://amiskiewiczpl.github.io/daria-sklep/`
+- Storefront pobiera tylko produkty z `publish_status = published`.
+- Admin widzi i edytuje statusy `draft`, `published`, `archived`, `hidden`.
+- Zdjęcia produktów są trzymane w bucketcie Supabase Storage `product-images`.
+- Sekcje homepage są publiczne tylko przy `is_published = true`.
 
-## Cart and Checkout
+## Deploy
 
-- Cart data is stored in localStorage
-- Checkout redirects to external payment processor (Stripe, PayPal, etc.)
-- No backend required for basic functionality
+Obecny deploy GitHub Pages publikuje storefront:
 
-## Integrations
+```bash
+npm run deploy
+```
 
-- **Payments**: External (Stripe Checkout recommended)
-- **Contact Forms**: External (Formspree, Netlify Forms)
-- **Newsletter**: External (Mailchimp, ConvertKit)
+Panel admina jest osobną aplikacją i powinien być wdrożony jako osobny statyczny projekt z tymi samymi zmiennymi `VITE_SUPABASE_*`.
