@@ -15,6 +15,7 @@ export default {
       },
       boxShadow: {
         premium: 'var(--shadow-card)',
+        'premium-hover': 'var(--shadow-card-hover)',
       },
       borderRadius: {
         '4xl': 'var(--radius-xl)',

@@ -14,6 +14,28 @@ export type ProductMaterial = 'len' | 'bawełna' | 'wiskoza' | 'bambus' | 'wełn
 
 export type ProductStatus = 'in-stock' | 'made-to-order'
 
+export type SortOption = 'featured' | 'newest' | 'price-asc' | 'price-desc'
+
+export interface ShopFilters {
+  categories: ProductCategorySlug[]
+  materials: ProductMaterial[]
+  sizes: string[]
+  statuses: ProductStatus[]
+  colors: string[]
+  patterns: string[]
+  onlyNew: boolean
+  sortBy: SortOption
+}
+
+export interface ShopFilterOptions {
+  categories: ProductCategorySlug[]
+  materials: ProductMaterial[]
+  sizes: string[]
+  statuses: ProductStatus[]
+  colors: string[]
+  patterns: string[]
+}
+
 export type SizeRange = 'XXS-S' | 'M-L' | 'XL-XXL'
 
 export type ProductLabel = 'nowość' | 'bestseller' | 'kolekcja'

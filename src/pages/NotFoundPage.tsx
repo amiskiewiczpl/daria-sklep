@@ -1,17 +1,18 @@
-import { Link } from 'react-router-dom'
+﻿import { Link } from 'react-router-dom'
 
 const NotFoundPage = () => {
   return (
-    <div className="container mx-auto px-6 py-24 text-center text-brand-default">
-      <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-4">404</p>
-      <h1 className="text-5xl font-semibold mb-6">Strona nie została znaleziona</h1>
-      <p className="text-brand-muted mb-8">Link jest nieaktywny lub strona została przeniesiona.</p>
-      <Link
-        to="/"
-        className="inline-flex items-center justify-center rounded-full bg-brand-default px-8 py-4 text-sm font-semibold text-white transition hover:bg-brand-accent"
-      >
-        Powrót do strony głównej
-      </Link>
+    <div className="section-shell text-brand">
+      <div className="site-container">
+        <div className="mx-auto max-w-2xl rounded-lg border border-brand-border bg-white p-10 text-center shadow-premium">
+          <p className="section-kicker">404</p>
+          <h1 className="text-4xl font-semibold leading-tight sm:text-5xl">Strona nie została znaleziona</h1>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-brand-muted">Link jest nieaktywny lub strona została przeniesiona.</p>
+          <Link to="/" className="mt-8 inline-flex min-h-12 items-center justify-center rounded-lg bg-brand px-7 py-3 text-sm font-semibold text-white transition hover:bg-brand-accent">
+            Powrót do strony głównej
+          </Link>
+        </div>
+      </div>
     </div>
   )
 }

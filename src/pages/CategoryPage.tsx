@@ -1,35 +1,39 @@
-import { useParams, Link } from 'react-router-dom'
-import { products } from '../data/products'
+﻿import { Link, useParams } from 'react-router-dom'
 import ProductCard from '../components/common/ProductCard'
+import PageHeader from '../components/ui/PageHeader'
+import { getCategoryBySlug, getProductsByCategory } from '../utils/dataAdapter'
 
 const CategoryPage = () => {
-  const { categoryName } = useParams()
-  const category = categoryName ? decodeURIComponent(categoryName) : ''
-  const filteredProducts = products.filter((item) => item.category === category)
+  const { slug } = useParams()
+  const category = slug ? decodeURIComponent(slug) : ''
+  const categoryData = getCategoryBySlug(category)
+  const filteredProducts = getProductsByCategory(category)
+  const label = categoryData?.label || category || 'Kolekcja'
 
   return (
-    <div className="container mx-auto px-6 py-16 text-brand-default">
-      <div className="mb-10">
-        <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-2">Kategoria</p>
-        <h1 className="text-4xl font-semibold">{category || 'Kolekcja'}</h1>
-        <p className="text-brand-muted mt-4 max-w-2xl">
-          Sprawdź pełną ofertę premium w kategorii {category}. Idealna do codziennych i bardziej formalnych stylizacji.
-        </p>
+    <div className="section-shell text-brand">
+      <div className="site-container">
+        <PageHeader
+          kicker="Kategoria"
+          title={label}
+          lead={`Sprawdź pełną ofertę premium w kategorii ${label}. Każda karta pozostaje równa, czytelna i osadzona w tym samym gridzie.`}
+        />
+
+        {filteredProducts.length === 0 ? (
+          <div className="mx-auto max-w-2xl rounded-lg border border-brand-border bg-white p-10 text-center shadow-premium">
+            <p className="mb-5 text-lg font-semibold text-brand">Brak produktów w tej kategorii.</p>
+            <Link to="/sklep" className="inline-flex min-h-12 items-center justify-center rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white transition hover:bg-brand-accent">
+              Powrót do sklepu
+            </Link>
+          </div>
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </div>
-      {filteredProducts.length === 0 ? (
-        <div className="rounded-[1.5rem] border border-brand-border bg-white p-10 shadow-premium">
-          <p className="text-brand-default text-lg mb-4">Brak produktów w tej kategorii.</p>
-          <Link to="/produkty" className="text-brand-accent font-semibold hover:underline">
-            Powrót do wszystkich produktów
-          </Link>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      )}
     </div>
   )
 }
