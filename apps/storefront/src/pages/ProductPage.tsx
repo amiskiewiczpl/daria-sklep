@@ -5,12 +5,11 @@ import ProductGallery from '../components/ui/ProductGallery'
 import ProductInfo from '../components/ui/ProductInfo'
 import SizeSelector from '../components/ui/SizeSelector'
 import { useCart } from '../hooks/useCart'
-import { usePublishedProducts } from '../hooks/usePublishedProducts'
+import { useProductBySlug } from '../hooks/useProductBySlug'
 
 const ProductPage = () => {
   const { slug } = useParams()
-  const { products, loading, error } = usePublishedProducts()
-  const product = products.find((item) => item.slug === slug)
+  const { product, loading, error } = useProductBySlug(slug)
   const { addToCart } = useCart()
   const [selectedSize, setSelectedSize] = useState('')
   const [selectedColor, setSelectedColor] = useState('')

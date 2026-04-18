@@ -1,3 +1,4 @@
+import { sortProducts, uniqueStrings } from '@rosna/shared'
 import { Product, ProductMaterial, ProductStatus, ProductCategorySlug, SortOption, ShopFilters, ShopFilterOptions } from '../types'
 
 const normalizeValues = (values: string | string[] | null): string[] => {
@@ -5,8 +6,6 @@ const normalizeValues = (values: string | string[] | null): string[] => {
   if (Array.isArray(values)) return values.filter(Boolean)
   return values.split(',').filter(Boolean)
 }
-
-const unique = <T extends string>(items: T[]): T[] => Array.from(new Set(items))
 
 export const defaultFilters: ShopFilters = {
   categories: [],
@@ -63,30 +62,16 @@ export const filterProducts = (products: Product[], filters: ShopFilters): Produ
     return true
   })
 
-export const sortProducts = (products: Product[], sortBy: SortOption): Product[] => {
-  const sorted = [...products]
-
-  switch (sortBy) {
-    case 'price-asc':
-      return sorted.sort((a, b) => a.price - b.price)
-    case 'price-desc':
-      return sorted.sort((a, b) => b.price - a.price)
-    case 'newest':
-      return sorted.sort((a, b) => Number(b.isNew) - Number(a.isNew))
-    case 'featured':
-    default:
-      return sorted.sort((a, b) => Number(b.isBestSeller) - Number(a.isBestSeller) || Number(b.isNew) - Number(a.isNew))
-  }
-}
-
 export const getFilterOptions = (products: Product[]): ShopFilterOptions => ({
-  categories: unique(products.map((product) => product.category)),
-  materials: unique(products.flatMap((product) => product.materials)),
-  sizes: unique(products.flatMap((product) => product.sizes)),
-  statuses: unique(products.map((product) => product.status)),
-  colors: unique(products.flatMap((product) => product.colors)),
-  patterns: unique(products.flatMap((product) => product.variants.map((variant) => variant.pattern)).filter((value): value is string => Boolean(value))),
+  categories: uniqueStrings(products.map((product) => product.category)) as ProductCategorySlug[],
+  materials: uniqueStrings(products.flatMap((product) => product.materials)) as ProductMaterial[],
+  sizes: uniqueStrings(products.flatMap((product) => product.sizes)),
+  statuses: uniqueStrings(products.map((product) => product.status)) as ProductStatus[],
+  colors: uniqueStrings(products.flatMap((product) => product.colors)),
+  patterns: uniqueStrings(products.flatMap((product) => product.variants.map((variant) => variant.pattern)).filter((value): value is string => Boolean(value))),
 })
+
+export { sortProducts }
 
 export const getActiveFilterCount = (filters: ShopFilters) =>
   filters.categories.length +

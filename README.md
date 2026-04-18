@@ -36,6 +36,8 @@ npm run build
 
 Storefront działa domyślnie na `5173`, admin na `5174`.
 
+Szczegółowa konfiguracja env, Vercel/Netlify i checklisty deployu są w `docs/deployment.md`.
+
 ## Supabase
 
 1. Utwórz projekt Supabase.
@@ -48,6 +50,8 @@ Storefront działa domyślnie na `5173`, admin na `5174`.
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
+
+Vite czyta env osobno z `apps/storefront/.env` i `apps/admin/.env`.
 
 Szczegółowy plan wdrożenia jest w `docs/implementation-plan.md`.
 

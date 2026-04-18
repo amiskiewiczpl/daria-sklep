@@ -3,10 +3,10 @@ import { useSearchParams } from 'react-router-dom'
 import ProductCard from '../components/common/ProductCard'
 import FilterPanel from '../components/ui/FilterPanel'
 import PageHeader from '../components/ui/PageHeader'
+import { useProductListing } from '../hooks/useProductListing'
 import { usePublishedProducts } from '../hooks/usePublishedProducts'
 import {
   defaultFilters,
-  filterProducts,
   formatFiltersToSearchParams,
   getActiveFilterCount,
   getFilterOptions,
@@ -16,11 +16,12 @@ import {
 import type { ShopFilters } from '../types'
 
 const Products = () => {
-  const { products, loading, error } = usePublishedProducts()
-  const filterOptions = getFilterOptions(products)
+  const { products: optionProducts, error: optionsError } = usePublishedProducts()
   const [searchParams, setSearchParams] = useSearchParams()
   const [filters, setFilters] = useState<ShopFilters>(defaultFilters)
   const [showMobileFilters, setShowMobileFilters] = useState(false)
+  const { products, loading, error } = useProductListing(filters)
+  const filterOptions = getFilterOptions(optionProducts.length ? optionProducts : products)
 
   useEffect(() => {
     const parsed = parseFiltersFromSearchParams(searchParams)
@@ -35,7 +36,7 @@ const Products = () => {
   }, [filters, searchParams, setSearchParams])
 
   const filteredProducts = useMemo(
-    () => sortProducts(filterProducts(products, filters), filters.sortBy),
+    () => sortProducts(products, filters.sortBy),
     [products, filters]
   )
 
@@ -50,7 +51,7 @@ const Products = () => {
           lead="Pełna kolekcja Rosna: naturalne tkaniny, spokojne kroje i produkty projektowane do codziennej elegancji."
         />
 
-        {error ? <p className="mb-6 rounded-lg border border-brand-border bg-white p-4 text-center text-sm text-brand-muted shadow-premium">{error}</p> : null}
+        {error || optionsError ? <p className="mb-6 rounded-lg border border-brand-border bg-white p-4 text-center text-sm text-brand-muted shadow-premium">{error || optionsError}</p> : null}
 
         <div className="mb-8 flex flex-col items-center gap-4 rounded-lg border border-brand-border bg-white p-5 text-center shadow-premium lg:flex-row lg:justify-between lg:text-left">
           <div>

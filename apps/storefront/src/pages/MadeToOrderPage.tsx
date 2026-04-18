@@ -1,32 +1,32 @@
-﻿import ProductCard from '../components/common/ProductCard'
+import ProductCard from '../components/common/ProductCard'
 import PageHeader from '../components/ui/PageHeader'
-import { getProducts } from '../utils/dataAdapter'
+import { usePublishedProducts } from '../hooks/usePublishedProducts'
 
 const steps = [
   {
     title: 'Konsultacja',
-    text: 'Zaczynamy od sylwetki, długości, preferowanej tkaniny i sposobu noszenia ubrania.',
+    text: 'Zaczynamy od sylwetki, dlugosci, preferowanej tkaniny i sposobu noszenia ubrania.',
   },
   {
     title: 'Szycie',
-    text: 'Model powstaje w krótkim procesie atelier, z kontrolą proporcji i jakości wykończenia.',
+    text: 'Model powstaje w krotkim procesie atelier, z kontrola proporcji i jakosci wykonczenia.',
   },
   {
     title: 'Dopasowanie',
-    text: 'Finalne poprawki służą temu, żeby ubranie pracowało z ciałem, a nie tylko dobrze wyglądało na wieszaku.',
+    text: 'Finalne poprawki sluza temu, zeby ubranie pracowalo z cialem, a nie tylko dobrze wygladalo na wieszaku.',
   },
 ]
 
 const MadeToOrderPage = () => {
-  const products = getProducts().filter((product) => product.status === 'made-to-order')
+  const { products, loading, error } = usePublishedProducts({ productionType: 'made_to_order' })
 
   return (
     <div className="section-shell text-brand">
       <div className="site-container">
         <PageHeader
           kicker="Made to order"
-          title="Produkty szyte na miarę"
-          lead="Modele na zamówienie powstają wolniej, z naciskiem na materiał, proporcje i indywidualne dopasowanie."
+          title="Produkty szyte na miare"
+          lead="Modele na zamowienie powstaja wolniej, z naciskiem na material, proporcje i indywidualne dopasowanie."
         />
 
         <div className="mb-12 grid gap-6 md:grid-cols-3">
@@ -38,11 +38,23 @@ const MadeToOrderPage = () => {
           ))}
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {error ? <p className="mb-6 rounded-lg border border-brand-border bg-white p-4 text-center text-sm text-brand-muted shadow-premium">{error}</p> : null}
+
+        {loading ? (
+          <div className="rounded-lg border border-brand-border bg-white p-12 text-center text-brand-muted shadow-premium">
+            Ladowanie produktow...
+          </div>
+        ) : products.length ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-lg border border-brand-border bg-white p-12 text-center text-brand-muted shadow-premium">
+            Aktualnie brak opublikowanych produktow made to order.
+          </div>
+        )}
       </div>
     </div>
   )

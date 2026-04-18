@@ -26,9 +26,20 @@ jobs:
         run: npm ci
 
       - name: Build storefront bundle
+        env:
+          VITE_APP_ENV: production
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_STOREFRONT_SITE_URL: https://amiskiewiczpl.github.io/daria-sklep
+          VITE_STOREFRONT_BASE_PATH: /daria-sklep/
         run: npm run build:storefront
 
       - name: Deploy to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VITE_APP_ENV: production
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_STOREFRONT_SITE_URL: https://amiskiewiczpl.github.io/daria-sklep
+          VITE_STOREFRONT_BASE_PATH: /daria-sklep/
         run: npm run deploy

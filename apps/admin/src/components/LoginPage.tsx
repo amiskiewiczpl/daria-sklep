@@ -1,24 +1,43 @@
 import { FormEvent, useState } from 'react'
-import { supabase } from '../lib/supabase'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { useAuth } from '../auth'
+
+interface LoginLocationState {
+  from?: { pathname: string }
+  denied?: boolean
+  error?: string
+}
 
 const LoginPage = () => {
+  const { signIn, isAuthenticated, canAccessAdmin, loading, profileLoading, error } = useAuth()
+  const location = useLocation()
+  const navigate = useNavigate()
+  const state = location.state as LoginLocationState | null
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [formError, setFormError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+
+  const redirectTo = state?.from?.pathname ?? '/admin'
+
+  if (!loading && !profileLoading && isAuthenticated && canAccessAdmin) {
+    return <Navigate to={redirectTo} replace />
+  }
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    setLoading(true)
-    setError('')
+    setSubmitting(true)
+    setFormError('')
 
-    const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+    const result = await signIn(email, password)
 
-    if (signInError) {
-      setError(signInError.message)
+    if (!result.ok) {
+      setFormError(result.error ?? 'Nie udało się zalogować.')
+      setSubmitting(false)
+      return
     }
 
-    setLoading(false)
+    navigate(redirectTo, { replace: true })
   }
 
   return (
@@ -27,23 +46,52 @@ const LoginPage = () => {
         <div className="text-center">
           <p className="text-xs font-semibold uppercase text-brand-accent">Rosna Admin</p>
           <h1 className="mt-3 text-3xl font-semibold">Logowanie sprzedawcy</h1>
-          <p className="mt-3 text-sm leading-6 text-brand-muted">Dostęp tylko dla kont przypisanych w tabeli admin_profiles.</p>
+          <p className="mt-3 text-sm leading-6 text-brand-muted">
+            Dostęp tylko dla aktywnych profili z rolą admin, editor lub seller.
+          </p>
         </div>
 
         <div>
-          <label className="admin-label" htmlFor="email">Email</label>
-          <input id="email" className="admin-input" type="email" value={email} onChange={(event) => setEmail(event.target.value)} required />
+          <label className="admin-label" htmlFor="email">
+            Email
+          </label>
+          <input
+            id="email"
+            className="admin-input"
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            autoComplete="email"
+            required
+          />
         </div>
 
         <div>
-          <label className="admin-label" htmlFor="password">Hasło</label>
-          <input id="password" className="admin-input" type="password" value={password} onChange={(event) => setPassword(event.target.value)} required />
+          <label className="admin-label" htmlFor="password">
+            Hasło
+          </label>
+          <input
+            id="password"
+            className="admin-input"
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            autoComplete="current-password"
+            required
+          />
         </div>
 
-        {error ? <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</p> : null}
+        {state?.denied ? (
+          <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+            {state.error || 'Brak dostępu do panelu.'}
+          </p>
+        ) : null}
+        {formError || error ? (
+          <p className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">{formError || error}</p>
+        ) : null}
 
-        <button type="submit" className="admin-button w-full" disabled={loading}>
-          {loading ? 'Logowanie...' : 'Zaloguj'}
+        <button type="submit" className="admin-button w-full" disabled={submitting || loading || profileLoading}>
+          {submitting ? 'Logowanie...' : 'Zaloguj'}
         </button>
       </form>
     </main>
