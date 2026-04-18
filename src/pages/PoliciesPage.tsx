@@ -3,26 +3,26 @@ const PoliciesPage = () => {
     <div className="container mx-auto px-6 py-16 text-brand-default">
       <div className="max-w-4xl space-y-10">
         <div>
-          <p className="text-sm uppercase tracking-[0.35em] text-brand-muted">Policies</p>
-          <h1 className="text-4xl font-semibold">Shipping, returns and order support</h1>
+          <p className="text-sm uppercase tracking-[0.35em] text-brand-muted">Regulamin</p>
+          <h1 className="text-4xl font-semibold">Dostawa, zwroty i obsługa klienta</h1>
         </div>
         <div className="space-y-6">
           <section className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
-            <h2 className="text-2xl font-semibold mb-3">Shipping</h2>
+            <h2 className="text-2xl font-semibold mb-3">Dostawa</h2>
             <p className="text-brand-muted leading-relaxed">
-              All orders are shipped within 24 hours on business days. Free standard shipping is available on all orders over $200.
+              Zamówienia wysyłamy w ciągu 24 godzin w dni robocze. Darmowa dostawa obowiązuje przy zamówieniach powyżej 200 zł.
             </p>
           </section>
           <section className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
-            <h2 className="text-2xl font-semibold mb-3">Returns</h2>
+            <h2 className="text-2xl font-semibold mb-3">Zwroty</h2>
             <p className="text-brand-muted leading-relaxed">
-              Returns are accepted within 14 days of delivery. Items must be unused and in original condition for a full refund.
+              Zwroty przyjmujemy w ciągu 14 dni od dostawy. Towar powinien być nieużywany i w oryginalnym stanie, aby otrzymać pełny zwrot.
             </p>
           </section>
           <section className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
-            <h2 className="text-2xl font-semibold mb-3">Customer support</h2>
+            <h2 className="text-2xl font-semibold mb-3">Obsługa klienta</h2>
             <p className="text-brand-muted leading-relaxed">
-              Our support team is available Monday through Friday. For urgent questions, please contact hello@rosna.com.
+              Nasz zespół jest dostępny od poniedziałku do piątku. W pilnych sprawach napisz na hello@rosna.com.
             </p>
           </section>
         </div>

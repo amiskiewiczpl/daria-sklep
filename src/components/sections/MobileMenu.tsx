@@ -19,17 +19,17 @@ const MobileMenu = ({ open, onClose, cartItemCount }: MobileMenuProps) => {
           onClick={onClose}
           className="mb-8 inline-flex items-center rounded-full border border-brand-border px-4 py-2 text-sm text-brand-default"
         >
-          Close
+          Zamknij
         </button>
         <nav className="flex flex-col gap-5 text-lg font-medium text-brand-default">
-          <Link to="/" onClick={onClose}>Home</Link>
-          <Link to="/products" onClick={onClose}>Shop</Link>
-          <Link to="/about" onClick={onClose}>About</Link>
+          <Link to="/" onClick={onClose}>Strona główna</Link>
+          <Link to="/produkty" onClick={onClose}>Oferta</Link>
+          <Link to="/o-nas" onClick={onClose}>O nas</Link>
           <Link to="/faq" onClick={onClose}>FAQ</Link>
-          <Link to="/contact" onClick={onClose}>Contact</Link>
-          <Link to="/policies" onClick={onClose}>Policies</Link>
-          <Link to="/cart" onClick={onClose} className="mt-4 text-brand-accent">
-            Cart ({cartItemCount})
+          <Link to="/kontakt" onClick={onClose}>Kontakt</Link>
+          <Link to="/regulamin" onClick={onClose}>Regulamin</Link>
+          <Link to="/koszyk" onClick={onClose} className="mt-4 text-brand-accent">
+            Koszyk ({cartItemCount})
           </Link>
         </nav>
       </div>

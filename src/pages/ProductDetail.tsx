@@ -12,15 +12,15 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1)
 
   if (!product) {
-    return <div>Product not found</div>
+    return <div>Produkt nie znaleziony</div>
   }
 
   const handleAddToCart = () => {
     if (selectedSize && selectedColor) {
       addToCart(product, quantity, selectedSize, selectedColor)
-      alert('Added to cart!')
+      alert('Dodano do koszyka!')
     } else {
-      alert('Please select size and color')
+      alert('Wybierz rozmiar i kolor')
     }
   }
 
@@ -37,16 +37,16 @@ const ProductDetail = () => {
         <div>
           <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
           <p className="text-gray-600 mb-4">{product.description}</p>
-          <p className="text-2xl font-bold mb-4">${product.price}</p>
+          <p className="text-2xl font-bold mb-4">{product.price} zł</p>
 
           <div className="mb-4">
-            <label className="block mb-2">Size:</label>
+            <label className="block mb-2">Rozmiar:</label>
             <select
               value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
               className="border p-2 rounded"
             >
-              <option value="">Select size</option>
+              <option value="">Wybierz rozmiar</option>
               {product.sizes.map(size => (
                 <option key={size} value={size}>{size}</option>
               ))}
@@ -54,13 +54,13 @@ const ProductDetail = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2">Color:</label>
+            <label className="block mb-2">Kolor:</label>
             <select
               value={selectedColor}
               onChange={(e) => setSelectedColor(e.target.value)}
               className="border p-2 rounded"
             >
-              <option value="">Select color</option>
+              <option value="">Wybierz kolor</option>
               {product.colors.map(color => (
                 <option key={color} value={color}>{color}</option>
               ))}
@@ -68,7 +68,7 @@ const ProductDetail = () => {
           </div>
 
           <div className="mb-4">
-            <label className="block mb-2">Quantity:</label>
+            <label className="block mb-2">Ilość:</label>
             <input
               type="number"
               min="1"
@@ -82,7 +82,7 @@ const ProductDetail = () => {
             onClick={handleAddToCart}
             className="bg-black text-white px-8 py-3 rounded-lg"
           >
-            Add to Cart
+            Dodaj do koszyka
           </button>
         </div>
       </div>

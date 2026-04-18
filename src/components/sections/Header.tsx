@@ -14,23 +14,23 @@ const Header = () => {
           ROSNA
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
-          <Link to="/products" className="text-sm font-medium text-brand-default hover:text-brand-accent">
-            Shop
+          <Link to="/produkty" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Oferta
           </Link>
-          <Link to="/about" className="text-sm font-medium text-brand-default hover:text-brand-accent">
-            About
+          <Link to="/o-nas" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            O nas
           </Link>
           <Link to="/faq" className="text-sm font-medium text-brand-default hover:text-brand-accent">
             FAQ
           </Link>
-          <Link to="/contact" className="text-sm font-medium text-brand-default hover:text-brand-accent">
-            Contact
+          <Link to="/kontakt" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Kontakt
           </Link>
-          <Link to="/policies" className="text-sm font-medium text-brand-default hover:text-brand-accent">
-            Policies
+          <Link to="/regulamin" className="text-sm font-medium text-brand-default hover:text-brand-accent">
+            Regulamin
           </Link>
-          <Link to="/cart" className="text-sm font-semibold text-brand-accent">
-            Cart ({cart.length})
+          <Link to="/koszyk" className="text-sm font-semibold text-brand-accent">
+            Koszyk ({cart.length})
           </Link>
         </nav>
         <button

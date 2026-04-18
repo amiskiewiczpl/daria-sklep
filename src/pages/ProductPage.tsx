@@ -5,8 +5,8 @@ import { useCart } from '../hooks/useCart'
 import { formatPrice } from '../utils/format'
 
 const ProductPage = () => {
-  const { id } = useParams()
-  const product = products.find((item) => item.id === id)
+  const { slug } = useParams()
+  const product = products.find((item) => item.slug === slug)
   const { addToCart } = useCart()
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] ?? '')
   const [selectedColor, setSelectedColor] = useState(product?.colors[0] ?? '')
@@ -15,8 +15,8 @@ const ProductPage = () => {
   if (!product) {
     return (
       <div className="container mx-auto px-6 py-16 text-brand-default">
-        <p className="text-2xl font-semibold mb-4">Product not found</p>
-        <p className="text-brand-muted">Please choose another item from the collection.</p>
+        <p className="text-2xl font-semibold mb-4">Produkt nie znaleziony</p>
+        <p className="text-brand-muted">Wybierz inny produkt z naszej kolekcji.</p>
       </div>
     )
   }
@@ -34,7 +34,7 @@ const ProductPage = () => {
         </div>
         <div className="space-y-8">
           <div>
-            <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-3">{product.category}</p>
+            <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-3">{product.categoryLabel}</p>
             <h1 className="text-4xl font-semibold mb-4">{product.name}</h1>
             <p className="text-brand-muted leading-relaxed">{product.description}</p>
           </div>
@@ -42,7 +42,7 @@ const ProductPage = () => {
             <p className="text-3xl font-bold mb-3">{formatPrice(product.price)}</p>
             <div className="grid gap-6">
               <div>
-                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Size</label>
+                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Rozmiar</label>
                 <select
                   value={selectedSize}
                   onChange={(event) => setSelectedSize(event.target.value)}
@@ -56,7 +56,7 @@ const ProductPage = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Color</label>
+                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Kolor</label>
                 <select
                   value={selectedColor}
                   onChange={(event) => setSelectedColor(event.target.value)}
@@ -70,7 +70,7 @@ const ProductPage = () => {
                 </select>
               </div>
               <div>
-                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Quantity</label>
+                <label className="text-sm uppercase tracking-[0.3em] text-brand-muted mb-2 block">Ilość</label>
                 <input
                   type="number"
                   min={1}
@@ -83,7 +83,7 @@ const ProductPage = () => {
                 onClick={handleAddToCart}
                 className="rounded-full bg-brand-default px-6 py-4 text-sm font-semibold uppercase tracking-[0.15em] text-white transition hover:bg-brand-accent"
               >
-                Add to cart
+                Dodaj do koszyka
               </button>
             </div>
           </div>

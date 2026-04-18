@@ -7,26 +7,26 @@ const Footer = () => {
         <div className="space-y-4">
           <h3 className="text-lg font-semibold">Rosna</h3>
           <p className="text-brand-muted leading-relaxed">
-            A premium fashion showroom built as a refined online experience for modern elegance.
+            Rosna to sklep modowy premium z polskimi kolekcjami i eleganckimi zestawami.
           </p>
         </div>
         <div className="space-y-3">
-          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Shop</h4>
-          <Link to="/products" className="block hover:text-brand-accent">All Products</Link>
-          <Link to="/category/Dresses" className="block hover:text-brand-accent">Dresses</Link>
-          <Link to="/category/Outerwear" className="block hover:text-brand-accent">Outerwear</Link>
+          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Oferta</h4>
+          <Link to="/produkty" className="block hover:text-brand-accent">Wszystkie produkty</Link>
+          <Link to="/kategoria/legginsy" className="block hover:text-brand-accent">Legginsy</Link>
+          <Link to="/kategoria/spodnie" className="block hover:text-brand-accent">Spodnie</Link>
         </div>
         <div className="space-y-3">
-          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Company</h4>
-          <Link to="/about" className="block hover:text-brand-accent">About</Link>
+          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Firma</h4>
+          <Link to="/o-nas" className="block hover:text-brand-accent">O nas</Link>
           <Link to="/faq" className="block hover:text-brand-accent">FAQ</Link>
-          <Link to="/policies" className="block hover:text-brand-accent">Policies</Link>
+          <Link to="/regulamin" className="block hover:text-brand-accent">Regulamin</Link>
         </div>
         <div className="space-y-3">
-          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Support</h4>
+          <h4 className="text-sm uppercase tracking-[0.3em] text-brand-muted">Wsparcie</h4>
           <p className="text-brand-muted">hello@rosna.com</p>
           <p className="text-brand-muted">+48 123 456 789</p>
-          <p className="text-brand-muted">External newsletter via Mailchimp or ConvertKit</p>
+          <p className="text-brand-muted">Newsletter przez Mailchimp lub ConvertKit</p>
         </div>
       </div>
     </footer>

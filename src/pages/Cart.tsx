@@ -8,12 +8,12 @@ const Cart = () => {
   return (
     <div className="container mx-auto px-6 py-16 text-brand-default">
       <div className="mb-10">
-        <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-2">Cart</p>
-        <h1 className="text-4xl font-semibold">Your shopping bag</h1>
+        <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-2">Koszyk</p>
+        <h1 className="text-4xl font-semibold">Twój koszyk</h1>
       </div>
       {cart.length === 0 ? (
         <div className="rounded-[1.5rem] border border-brand-border bg-white p-10 shadow-premium">
-          <p className="text-lg text-brand-muted">Your cart is empty. Add a product to continue.</p>
+          <p className="text-lg text-brand-muted">Twój koszyk jest pusty. Dodaj produkt, aby kontynuować.</p>
         </div>
       ) : (
         <div className="grid gap-10 xl:grid-cols-[1.3fr_0.7fr]">
@@ -28,8 +28,8 @@ const Cart = () => {
                   />
                   <div>
                     <h3 className="text-lg font-semibold">{item.product.name}</h3>
-                    <p className="text-brand-muted">Size: {item.selectedSize} • Color: {item.selectedColor}</p>
-                    <p className="text-brand-muted">Quantity: {item.quantity}</p>
+                    <p className="text-brand-muted">Rozmiar: {item.selectedSize} • Kolor: {item.selectedColor}</p>
+                    <p className="text-brand-muted">Ilość: {item.quantity}</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -38,20 +38,20 @@ const Cart = () => {
                     onClick={() => removeFromCart(index)}
                     className="mt-3 text-sm font-medium text-brand-accent hover:underline"
                   >
-                    Remove
+                    Usuń
                   </button>
                 </div>
               </div>
             ))}
           </div>
           <aside className="rounded-[1.5rem] border border-brand-border bg-white p-8 shadow-premium">
-            <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-4">Order summary</p>
+            <p className="text-sm uppercase tracking-[0.35em] text-brand-muted mb-4">Podsumowanie zamówienia</p>
             <p className="text-3xl font-semibold mb-6">{formatPrice(getTotal())}</p>
             <Link
-              to="/checkout"
+              to="/zamowienie"
               className="inline-flex w-full items-center justify-center rounded-full bg-brand-default px-6 py-4 text-sm font-semibold text-white transition hover:bg-brand-accent"
             >
-              Proceed to checkout
+              Przejdź do kasy
             </Link>
           </aside>
         </div>

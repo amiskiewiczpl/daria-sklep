@@ -1,16 +1,16 @@
 const FAQPage = () => {
   const faqs = [
     {
-      question: 'What is the shipping time?',
-      answer: 'Standard shipping arrives in 3-7 business days, and express delivery is available at checkout.'
+      question: 'Jaki jest czas dostawy?',
+      answer: 'Standardowa dostawa trwa 3-7 dni roboczych. Dostępna jest też opcja ekspresowa przy kasie.'
     },
     {
-      question: 'Can I return an item?',
-      answer: 'Yes, returns are accepted within 14 days of delivery following our policies page.'
+      question: 'Czy mogę zwrócić produkt?',
+      answer: 'Tak, zwroty przyjmujemy w ciągu 14 dni od dostawy zgodnie z zasadami opisanymi w regulaminie.'
     },
     {
-      question: 'How do I know my size?',
-      answer: 'Size recommendations are included on every product card and product page for an easy fit experience.'
+      question: 'Jak dobrać rozmiar?',
+      answer: 'Wskazówki dotyczące rozmiaru znajdują się przy każdym produkcie i pomagają wybrać najlepsze dopasowanie.'
     }
   ]
 
@@ -19,7 +19,7 @@ const FAQPage = () => {
       <div className="max-w-4xl space-y-10">
         <div>
           <p className="text-sm uppercase tracking-[0.35em] text-brand-muted">FAQ</p>
-          <h1 className="text-4xl font-semibold">Frequently asked questions</h1>
+          <h1 className="text-4xl font-semibold">Najczęściej zadawane pytania</h1>
         </div>
         <div className="space-y-6">
           {faqs.map((item) => (
