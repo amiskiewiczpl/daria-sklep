@@ -11,6 +11,7 @@ import {
   canProductBePublic,
   isPublicHomepageStatus,
 } from '@rosna/shared'
+import { getPublishedLocalProducts } from '../utils/dataAdapter'
 import { isSupabaseConfigured, supabase } from '../lib/supabase'
 
 type ProductImageRow = {
@@ -126,15 +127,13 @@ const homepageSelect = `
   homepage_section_items(*)
 `
 
-const requireSupabase = () => {
-  if (!isSupabaseConfigured || !supabase) {
-    throw new Error('Storefront wymaga konfiguracji VITE_SUPABASE_URL i VITE_SUPABASE_ANON_KEY.')
-  }
-
-  return supabase
-}
-
 const uniqueValues = (values: string[]) => Array.from(new Set(values.map((value) => value.trim()).filter(Boolean)))
+
+const getLocalPublishedProducts = (filters: ProductQueryFilters = {}) =>
+  applyClientFilters(
+    getPublishedLocalProducts().filter((product) => !product.publishStatus || product.publishStatus === 'published'),
+    filters,
+  )
 
 const mapProduct = (row: ProductRow): Product => {
   const sortedImages = [...(row.product_images ?? [])].sort((a, b) => a.sort_order - b.sort_order)
@@ -289,8 +288,11 @@ const applyClientFilters = (products: Product[], filters: ProductQueryFilters) =
   })
 
 export const getPublishedProducts = async (filters: ProductQueryFilters = {}): Promise<Product[]> => {
-  const client = requireSupabase()
-  let query = client
+  if (!isSupabaseConfigured || !supabase) {
+    return getLocalPublishedProducts(filters)
+  }
+
+  let query = supabase
     .from('products')
     .select(productSelect)
     .eq('status', 'published')
@@ -318,8 +320,11 @@ export const getPublishedProductsByShopFilters = async (filters: ShopFilters): P
   })
 
 export const getPublishedProductBySlug = async (slug: string): Promise<Product | undefined> => {
-  const client = requireSupabase()
-  const { data, error } = await client
+  if (!isSupabaseConfigured || !supabase) {
+    return getLocalPublishedProducts().find((product) => product.slug === slug)
+  }
+
+  const { data, error } = await supabase
     .from('products')
     .select(productSelect)
     .eq('status', 'published')
@@ -335,8 +340,11 @@ export const getPublishedProductBySlug = async (slug: string): Promise<Product |
 }
 
 export const getPublishedHomepageSections = async (): Promise<HomepageSection[]> => {
-  const client = requireSupabase()
-  const { data, error } = await client
+  if (!isSupabaseConfigured || !supabase) {
+    return []
+  }
+
+  const { data, error } = await supabase
     .from('homepage_sections')
     .select(homepageSelect)
     .eq('status', 'published')
