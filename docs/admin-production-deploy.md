@@ -3,7 +3,7 @@
 Production target:
 
 ```txt
-https://admin-rosna.vercel.app
+https://daria-sklep.vercel.app
 ```
 
 The admin app is deployed as a separate Vercel project from the same monorepo.
@@ -48,13 +48,13 @@ amiskiewiczpl/daria-sklep
 5. Set project name:
 
 ```txt
-admin-rosna
+daria-sklep
 ```
 
 6. Set production domain:
 
 ```txt
-https://admin-rosna.vercel.app
+https://daria-sklep.vercel.app
 ```
 
 7. Add environment variables in Vercel Project Settings -> Environment Variables:
@@ -63,11 +63,52 @@ https://admin-rosna.vercel.app
 VITE_APP_ENV=production
 VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
-VITE_ADMIN_SITE_URL=https://admin-rosna.vercel.app
+VITE_ADMIN_SITE_URL=https://daria-sklep.vercel.app
 VITE_ADMIN_BASE_PATH=/
 ```
 
 8. Deploy.
+
+## Vercel CLI deployment
+
+The production project is linked by Vercel CLI. Current production URL:
+
+```txt
+https://daria-sklep.vercel.app
+```
+
+Build and deploy:
+
+```bash
+npm run build:admin
+npx vercel --prod --yes
+```
+
+Before the production login can work, add these Vercel env variables:
+
+```bash
+npx vercel env add VITE_APP_ENV production
+npx vercel env add VITE_SUPABASE_URL production
+npx vercel env add VITE_SUPABASE_ANON_KEY production
+npx vercel env add VITE_ADMIN_SITE_URL production
+npx vercel env add VITE_ADMIN_BASE_PATH production
+```
+
+Values:
+
+```env
+VITE_APP_ENV=production
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
+VITE_ADMIN_SITE_URL=https://daria-sklep.vercel.app
+VITE_ADMIN_BASE_PATH=/
+```
+
+Redeploy after adding env:
+
+```bash
+npx vercel --prod --yes
+```
 
 ## Supabase Auth setup
 
@@ -75,13 +116,13 @@ In Supabase Dashboard -> Authentication -> URL Configuration set:
 
 ```txt
 Site URL:
-https://admin-rosna.vercel.app
+https://daria-sklep.vercel.app
 ```
 
 Add Redirect URLs:
 
 ```txt
-https://admin-rosna.vercel.app/*
+https://daria-sklep.vercel.app/*
 http://localhost:5174/*
 ```
 
@@ -120,7 +161,7 @@ on conflict (id) do update set
 Use:
 
 ```txt
-https://admin-rosna.vercel.app
+https://daria-sklep.vercel.app
 ```
 
 Checklist:

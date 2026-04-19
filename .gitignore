@@ -7,3 +7,5 @@ apps/*/dist/
 apps/*/.env
 apps/*/.env.local
 apps/*/.env.*.local
+
+.vercel
