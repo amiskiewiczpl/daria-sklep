@@ -1,5 +1,6 @@
 import { Session } from '@supabase/supabase-js'
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useState } from 'react'
+import { adminEnv, adminEnvError } from '../config/env'
 import { supabase } from '../lib/supabase'
 import type { AdminProfile, AuthContextValue } from './types'
 
@@ -33,6 +34,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const loadProfile = useCallback(async (nextSession: Session | null) => {
     setProfile(null)
     setError('')
+
+    if (!adminEnv.isSupabaseConfigured) {
+      setError(adminEnvError)
+      return
+    }
 
     if (!nextSession?.user) {
       return
@@ -72,6 +78,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     let mounted = true
 
+    if (!adminEnv.isSupabaseConfigured) {
+      setError(adminEnvError)
+      setLoading(false)
+      setProfileLoading(false)
+      return () => {
+        mounted = false
+      }
+    }
+
     supabase.auth.getSession().then(async ({ data }) => {
       if (!mounted) {
         return
@@ -101,6 +116,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = useCallback(async (email: string, password: string) => {
     setError('')
+
+    if (!adminEnv.isSupabaseConfigured) {
+      setError(adminEnvError)
+      return { ok: false, error: adminEnvError }
+    }
+
     const { data, error: signInError } = await supabase.auth.signInWithPassword({ email, password })
 
     if (signInError) {
